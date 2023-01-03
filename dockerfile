@@ -1,4 +1,6 @@
 FROM node:alpine 
 WORKDIR /contract
-COPY ["package*.json","tsconfig.*", "./"]
-RUN npm install && npm run build
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN ls && npm run build
