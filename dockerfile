@@ -1,4 +1,4 @@
 FROM node:alpine 
 WORKDIR /contract
-COPY ["package.json", "package-lock.json","tsconfig.*", "./"]
-RUN npm run build
+COPY ["package*.json","tsconfig.*", "./"]
+RUN npm install && npm run build

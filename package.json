@@ -6,7 +6,7 @@
   "types": "./lib/cjs/types/index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rd -r \"./lib\"",
+    "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
@@ -23,7 +23,9 @@
     "url": "https://github.com/adrielhojberg/api-contract-tests/issues"
   },
   "homepage": "https://github.com/adrielhojberg/api-contract-tests#readme",
-  "files":["lib/**/*"],
+  "files": [
+    "lib/**/*"
+  ],
   "exports": {
     ".": {
       "import": {
@@ -35,5 +37,8 @@
         "default": "./lib/cjs/index.js"
       }
     }
+  },
+  "devDependencies": {
+    "typescript": "^4.9.4"
   }
 }
