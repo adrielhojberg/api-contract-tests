@@ -1,4 +1,4 @@
-const fs = require("fs");
+import fs from 'fs'
 
 class Utils {
   async getData(_path) {

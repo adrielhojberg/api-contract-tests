@@ -1,13 +1,8 @@
-const {
-  getHttpOperationsFromSpec,
-} = require("@stoplight/prism-cli/dist/operations");
-const {
-  createClientFromOperations,
-} = require("@stoplight/prism-http/dist/client");
-const { resolve } = require("path");
-const { URL } = require("url");
-const Utils = require("../utils/Utils");
-var should = require("chai").should();
+import { getHttpOperationsFromSpec } from "@stoplight/prism-cli/dist/operations"
+import { createClientFromOperations } from "@stoplight/prism-http/dist/client"
+import { resolve } from "path"
+import { URL } from "url"
+import Utils from "../misc/Utils"
 
 let operations;
 
