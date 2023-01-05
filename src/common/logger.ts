@@ -1,33 +1,31 @@
+import { iLogger } from "../misc/types";
+
+export const violationsHandler = (logger:iLogger, input:boolean) => {
+    const data = input ? 'response' : 'request'
+    const dataType = input ? 'input' : 'output'
+    logger.testData[data] = {};
+    logger.testData[data].message = [];
+    violations[dataType].forEach((violation) => {
+    const code = violation.code;
+    const message = violation.message;
+    const path = violation.path;
+    logger.testData[data].message = [
+        ...logger.testData[data].message,
+        `${code || ""} - ${message} - ${path || ""}`,
+    ];
+    });
+}
+
 export const logger_testData =  async (response, error) => {
-    const logger = {};
+    const logger:iLogger = {};
     let violations = response.violations;
 
-    logger["Test_Data"] = {};
+    logger["testData"] = {};
     if (violations.input.length >= 1) {
-        logger.Test_Data["request"] = {};
-        logger.Test_Data.request["message"] = [];
-        violations.input.forEach((input) => {
-        const code = input.code;
-        const message = input.message;
-        const path = input.path;
-        logger.Test_Data.request.message = [
-            ...logger.Test_Data.request.message,
-            `${code || ""} - ${message} - ${path || ""}`,
-        ];
-        });
+        violationsHandler(logger, true)
     }
     if (violations.output.length >= 1) {
-        logger.Test_Data["response"] = {};
-        logger.Test_Data.response["message"] = [];
-        violations.output.forEach((output) => {
-        const code = output.code;
-        const message = output.message;
-        const path = output.path;
-        logger.Test_Data.response.message = [
-            ...logger.Test_Data.response.message,
-            `[${code || ""}]  ${message} in ${path || ""}`,
-        ];
-        });
+        violationsHandler(logger, false)
     }
 
     return logger;

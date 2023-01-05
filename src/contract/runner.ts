@@ -4,7 +4,7 @@ import { treatPath } from '../common/treatPath';
 import { PrismHttp } from '@stoplight/prism-http/dist/client'
 import { parseRequestBody } from '../misc/Utils';
 
-export const runContractTests = async (operation:IHttpOperation<false>, client:PrismHttp) => {
+export default async function runContractTests(operation:IHttpOperation<false>, client:PrismHttp) {
     let res;
     let url;
     let baseUrl = `http://${operation.servers[0].variables.hosts.enum[0]}.static-stg.internal`;
