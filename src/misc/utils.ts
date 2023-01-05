@@ -3,7 +3,7 @@ import { getHttpOperationsFromSpec } from "@stoplight/prism-cli/dist/operations"
 import { createClientFromOperations, PrismHttp } from "@stoplight/prism-http/dist/client"
 import { IHttpOperation } from '@stoplight/types'
 
-export const getData = async (path:string) => {
+export const getData = async (path:string) => { 
   const operations = await getHttpOperationsFromSpec(`${path}`);
   const client = createClientFromOperations(operations, {
     mock: false,
@@ -19,6 +19,7 @@ export const getData = async (path:string) => {
 
   return { operations, client };
 }
+
 
 export const runContractTests = async (operation:IHttpOperation<false>[], client:PrismHttp) => {
   let res;
