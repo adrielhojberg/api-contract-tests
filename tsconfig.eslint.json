@@ -1,16 +1,3 @@
 {
-    "compilerOptions": {
-      "strict": true,
-      "esModuleInterop": true,
-      "forceConsistentCasingInFileNames": true,
-      "noUnusedLocals": true,
-      "noUnusedParameters": true,
-      "noFallthroughCasesInSwitch": true,
-      "skipLibCheck": true,
-      "checkJs": true,
-      "allowJs": true,
-      "declaration": true,
-      "declarationMap": true,
-      "allowSyntheticDefaultImports": true
-    }
+    "extends":"./configs/tsconfig.base.json"
 }
