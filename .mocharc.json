@@ -1,5 +1,10 @@
 {
     "extension": ["ts"],
-    "spec": ["./lib/cjs/**/*.spec.js"],
-    "require": "ts-node/register"
+    "spec": ["./src/**/*.spec.ts","./tests/*.spec.ts"],
+    "require": "ts-node/register",
+    "loader": "ts-node/esm",
+    "watch-files": [
+        "src",
+        "tests"
+    ]
 }
