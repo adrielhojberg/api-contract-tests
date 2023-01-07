@@ -3,7 +3,7 @@ import * as pino from 'pino'
 
 export type httpMethod = 'request' | 'response'
 
-export type withoutBody = 'get' | 'delete' | 'head' | 'connect' | 'options' | 'trace'
+export type withoutBody = 'get' | 'delete' | 'head' | 'options' | 'trace'
 export type withBody = 'post' | 'put' | 'patch'
 
 export declare type IClientConfig = IHttpConfig & {

@@ -1,11 +1,12 @@
-import fs from 'fs'
+import { JSONSchema7 } from 'json-schema'
 
-export const parseRequestBody = async (body: JSONSchema7 | undefined) => {
-  const res = {}
-  Object.entries(body).map(([key, value]) => {
-    if (key === 'properties') {
-      Object.entries(value).forEach(([key, value]) => {
-        res[key] = value.examples?.[0] || ''
+export const parseRequestBody = async (body: JSONSchema7): Promise<JSONSchema7> => {
+  const res: JSONSchema7 = {}
+  Object.entries(body).forEach(([bodyKey, bodyValue]) => {
+    if (bodyKey === 'properties') {
+      Object.entries(bodyValue).forEach(([key, value]) => {
+        const val = value?.examples?.[0]
+        res[key] = val ?? ''
       })
     }
   })
@@ -14,21 +15,4 @@ export const parseRequestBody = async (body: JSONSchema7 | undefined) => {
 
 export const pathReplaceVar = (str: string, toReplace: string): string => {
   return str.replace(/\{.+?\}/, toReplace)
-}
-
-export const createErrorLogsFile = async (logs) => {
-  const [serviceTitle, servicesTests] = Object.entries(logs)[0]
-  const prettyTests = servicesTests.reduce((str, test) => {
-    // const treatedMessageResponse = test.messageResponse.split("-");
-    const testStr = `Error ---${test.testTitle}---
-    ${test.messageResponse || ''}
-    ${test.messageRequest || ''}
-    `
-    return `${str} ${testStr}`
-  }, '')
-  await fs.writeFileSync(
-    `output/${serviceTitle}.txt`,
-    prettyTests,
-    function (err) {}
-  )
 }

@@ -1,3 +1,3 @@
-import test from "./test";
+import test from './test'
 
-describe('contract', test);
+describe('contract', test)

@@ -1,27 +1,16 @@
-import { getHttpOperationsFromSpec } from "@stoplight/prism-cli/dist/operations"
-import { createClientFromOperations } from "@stoplight/prism-http/dist/client"
-import { resolve } from "path"
-import { URL } from "url"
-import Utils, { getData } from "../misc/Utils"
-import { prismClientConfig } from "../misc/const"
-import { wrapper } from "../contract/wrapper"
-
-let operations;
+import wrapper from './wrapper'
 
 // main function
-export default function test (){
-
-    before(
-  // before function
+export default function test (): void {
+  before(
     async () => {
-        getData("docs/example-api.yaml", prismClientConfig)
-        wrapper(fileName, operations, client);
+      const fileName = '../docs/example-api.yaml'
+      await wrapper(fileName)
     }
-    );
-    it("This is a required placeholder to allow before() to work @contract", 
-        function () {
-        console.log("Mocha should not require this hack IMHO");
-        }  
-    );
-    
+  )
+  it('This is a required placeholder to allow before() to work @contract',
+    function () {
+      console.log('Mocha should not require this hack IMHO')
+    }
+  )
 }

@@ -1,12 +1,17 @@
-import { getHttpOperationsFromSpec } from "@stoplight/prism-cli/dist/operations";
-import { createClientFromOperations } from "@stoplight/prism-http/dist/client"
-import { IClientConfig } from "../misc/types";
+import { getHttpOperationsFromSpec } from '@stoplight/prism-cli/dist/operations'
+import { PrismHttp, createClientFromOperations } from '@stoplight/prism-http/dist/client'
 
+import { IHttpOperation } from '@stoplight/types'
+import { IClientConfig } from '../misc/types'
 
-export const getData = async (path:string, prismConfig:IClientConfig) => { 
-        const operations = await getHttpOperationsFromSpec(`${path}`);
-        const client = createClientFromOperations(operations, prismConfig);
-        
-        return { operations, client};
-    }
-    
+interface iGetData {
+  operations: IHttpOperation[]
+  client: PrismHttp
+}
+
+export const getData = async (path: string, prismConfig: IClientConfig): Promise<iGetData> => {
+  const operations = await getHttpOperationsFromSpec(`${path}`)
+  const client = createClientFromOperations(operations, prismConfig)
+
+  return { operations, client }
+}

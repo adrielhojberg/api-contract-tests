@@ -1,14 +1,16 @@
+import { PrismHttp } from '@stoplight/prism-http/dist/client'
+import { IHttpOperation } from '@stoplight/types'
+import { loggerTestData } from '../common/logger'
 import runContractTests from './runner'
 
-export default async function individualTest (operation, client) {
-  let response
+export default async function individualTest (operation: IHttpOperation<false>, client: PrismHttp): Promise<void> {
+  // let response
+  const response = await runContractTests(operation, client)
   try {
-    response = await runContractTests(operation, client)
-
     await response.violations.input.should.have.lengthOf(0)
     await response.violations.output.should.have.lengthOf(0)
   } catch (error) {
-    const errorLogger = await Utils.logger_testData(response, error)
-    throw errorLogger
+    const errorLogger = await loggerTestData(response)
+    throw new Error(errorLogger?.toString())
   }
 }
