@@ -33,3 +33,7 @@ export interface iProperties {
 export interface bodyMustHave extends JSONSchema7 {
   properties?: iProperties
 }
+
+export interface commonObj {
+  [key: string]: unknown
+}

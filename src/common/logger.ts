@@ -46,19 +46,19 @@ export const loggerTestData = async (response: Awaited<ReturnType<PrismHttp['req
   return undefined
 }
 
-export const createErrorLogsFile = async (logs) => {
-  const [serviceTitle, servicesTests] = Object.entries(logs)[0]
-  const prettyTests = servicesTests.reduce((str, test) => {
-    // const treatedMessageResponse = test.messageResponse.split("-");
-    const testStr = `Error ---${test.testTitle}---
-    ${test.messageResponse || ''}
-    ${test.messageRequest || ''}
-    `
-    return `${str} ${testStr}`
-  }, '')
-  await fs.writeFileSync(
-    `output/${serviceTitle}.txt`,
-    prettyTests,
-    function (err) {}
-  )
-}
+// export const createErrorLogsFile = async (logs) => {
+//   const [serviceTitle, servicesTests] = Object.entries(logs)[0]
+//   const prettyTests = servicesTests.reduce((str, test) => {
+//     // const treatedMessageResponse = test.messageResponse.split("-");
+//     const testStr = `Error ---${test.testTitle}---
+//     ${test.messageResponse || ''}
+//     ${test.messageRequest || ''}
+//     `
+//     return `${str} ${testStr}`
+//   }, '')
+//   await fs.writeFileSync(
+//     `output/${serviceTitle}.txt`,
+//     prettyTests,
+//     function (err) {}
+//   )
+// }

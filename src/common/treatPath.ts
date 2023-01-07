@@ -1,4 +1,4 @@
-import { pathReplaceVar } from '../misc/Utils'
+import { pathReplaceVar } from '../misc/utils'
 import { IHttpOperation } from '@stoplight/types'
 
 export const treatPath = async (operation: IHttpOperation<false>): Promise<string> => {

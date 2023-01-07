@@ -1,8 +1,7 @@
-import { JSONSchema7 } from 'json-schema'
-import { bodyMustHave } from '../misc/types'
+import { bodyMustHave, commonObj } from '../misc/types'
 
-const parseRequestBody = async (body: bodyMustHave): Promise<JSONSchema7> => {
-  const res: JSONSchema7 = {}
+const parseRequestBody = async (body: bodyMustHave): Promise<commonObj> => {
+  const res: commonObj = {}
   const properties = body.properties
   if (properties != null) {
     Object.entries(properties).forEach(([key, value]) => {
