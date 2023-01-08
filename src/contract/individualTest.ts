@@ -2,7 +2,8 @@ import { PrismHttp } from '@stoplight/prism-http/dist/client'
 import { IHttpOperation } from '@stoplight/types'
 import { loggerTestData } from '../common/logger'
 import runContractTests from './runner'
-import 'chai'
+import chai from 'chai'
+chai.should()
 
 export default async function individualTest (operation: IHttpOperation<false>, client: PrismHttp): Promise<void> {
   // let response
