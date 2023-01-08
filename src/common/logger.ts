@@ -16,12 +16,12 @@ export const violationsHandler = (input: boolean, violations: IPrismOutput<IHttp
     return `${code ?? ''} - ${msg} - ${path?.toString() ?? ''}`
   })
   logger.testData[data] = { message }
-  // return logger
-  return {
-    testData: {
-      [data]: message
-    }
-  }
+  return logger
+  // return {
+  //   testData: {
+  //     [data]: message
+  //   }
+  // }
   // old code
   // violations[dataType].forEach((violation) => {
   //   const code = violation.code
@@ -36,8 +36,7 @@ export const violationsHandler = (input: boolean, violations: IPrismOutput<IHttp
 
 export const loggerTestData = async (response: Awaited<ReturnType<PrismHttp['request']>>): Promise<iLogger | undefined> => {
   const violations = response.violations
-  console.log(response)
-  console.log(violations)
+  // Agregar response.data al output
   if (violations.input.length >= 1) {
     return violationsHandler(true, violations)
   }
