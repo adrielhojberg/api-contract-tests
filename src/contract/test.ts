@@ -4,7 +4,7 @@ import wrapper from './wrapper'
 export default function test (): void {
   before(
     async () => {
-      const fileName = '../docs/example-api.yaml'
+      const fileName = 'docs/example-api.yaml'
       await wrapper(fileName)
     }
   )

@@ -1,8 +1,12 @@
 import { bodyMustHave, commonObj } from '../misc/types'
 
-const parseRequestBody = async (body: bodyMustHave): Promise<commonObj> => {
+const parseRequestBody = async (body: bodyMustHave): Promise<commonObj | commonObj[]> => {
   const res: commonObj = {}
-  const properties = body.properties
+  // dependiendo del tipo en el schema hay que parsear por ejemplo:
+  // type === object tiene properties y type === array tiene items
+  const isArray = body.type === 'array'
+  const obj = body.items ?? body
+  const properties = obj.properties
   if (properties != null) {
     Object.entries(properties).forEach(([key, value]) => {
       const val = value?.examples?.[0]
@@ -17,6 +21,7 @@ const parseRequestBody = async (body: bodyMustHave): Promise<commonObj> => {
   //     })
   //   }
   // })
+  if (isArray) return [res]
   return res
 }
 

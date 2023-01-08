@@ -7,18 +7,19 @@ import parseRequestBody from '../common/parseBody'
 
 export default async function runContractTests (operation: IHttpOperation<false>, client: PrismHttp): Promise<Awaited<ReturnType<PrismHttp['request']>>> {
   // let res: Awaited<ReturnType<PrismHttp['request']>>
-  const server = operation.servers?.[0].variables?.hosts.enum?.[0]
-  const baseUrl = `http://${server ?? ''}.static-stg.internal`
+  const server = operation.servers?.[0].url
+  const baseUrl = `${server ?? ''}`
   const path = await treatPath(operation)
   const url = `${baseUrl}${path}`
-
+  console.log(url)
   const body = operation.request?.body
   if (body != null) {
+    console.log(body.contents)
     const schema = body.contents?.[0].schema as bodyMustHave
     const requestBody = await parseRequestBody(schema ?? {})
-    const res = await client[operation.method as withBody](url, requestBody)
+    const res = await client[operation.method as withBody](path, requestBody)
     return res
   }
-  const res = await client[operation.method as withoutBody](url)
+  const res = await client[operation.method as withoutBody](path)
   return res
 }

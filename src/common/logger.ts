@@ -36,7 +36,8 @@ export const violationsHandler = (input: boolean, violations: IPrismOutput<IHttp
 
 export const loggerTestData = async (response: Awaited<ReturnType<PrismHttp['request']>>): Promise<iLogger | undefined> => {
   const violations = response.violations
-
+  console.log(response)
+  console.log(violations)
   if (violations.input.length >= 1) {
     return violationsHandler(true, violations)
   }

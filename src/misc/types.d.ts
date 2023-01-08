@@ -30,8 +30,13 @@ export interface iProperties {
   [key: string]: iValue
 }
 
+export interface iItems {
+  properties?: iProperties
+}
+
 export interface bodyMustHave extends JSONSchema7 {
   properties?: iProperties
+  items?: iItems
 }
 
 export interface commonObj {

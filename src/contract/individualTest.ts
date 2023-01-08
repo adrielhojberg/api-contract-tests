@@ -12,6 +12,7 @@ export default async function individualTest (operation: IHttpOperation<false>, 
     await response.violations.output.should.have.lengthOf(0)
   } catch (error) {
     const errorLogger = await loggerTestData(response)
-    throw new Error(errorLogger?.toString())
+    const parsedLogger = typeof errorLogger === 'string' ? errorLogger : JSON.stringify(errorLogger)
+    throw new Error(parsedLogger)
   }
 }
