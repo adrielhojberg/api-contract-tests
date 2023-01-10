@@ -11,6 +11,8 @@ export const HEADERS = { headers: { 'Content-type': 'application/json', accept: 
 
 export const TESTNAME = 'contract'
 
+export const PATHVARREGEXP = /\{.+?\}/
+
 export const LOGGEROPTIONS: LoggerOptions = {
   transport: {
     target: 'pino-pretty',
