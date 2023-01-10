@@ -8,7 +8,7 @@ export const generateMessage = (prismDiagnostic: IPrismDiagnostic[]): string[] =
     const code = violation.code
     const msg = violation.message
     const path = violation.path
-    return `${(code != null) ? `code: ${code} <->` : ''} message: ${msg} ${(path?.toString() != null) ? `<-> path: ${path.toString()}` : ''}`
+    return `Error${(code != null) ? ` ${code}:` : ':'} ${msg} ${(path?.toString() != null) ? `on ${path.toString()}` : ''}`
   })
 }
 
