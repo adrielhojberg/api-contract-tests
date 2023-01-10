@@ -3,12 +3,22 @@
       "strict": true,
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
+      "noUnusedLocals": true,
+      "noUnusedParameters": true,
+      "noFallthroughCasesInSwitch": true,
       "skipLibCheck": true,
       "checkJs": true,
       "allowJs": true,
       "declaration": true,
       "declarationMap": true,
-      "allowSyntheticDefaultImports": true
+      "allowSyntheticDefaultImports": true,
+      "types": [
+        "mocha",
+        "chai"
+      ]
     },
-    "files": ["../src/index.ts"]
-  }
+    "include": [
+      "../src/**/*",
+      "../tests/**/*"
+    ]
+}

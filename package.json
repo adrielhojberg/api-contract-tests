@@ -5,12 +5,14 @@
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/types/index.d.ts",
   "scripts": {
-    "test": "mocha",
+    "test": "./node_modules/mocha/bin/_mocha --grep unit",
+    "contract": "./node_modules/mocha/bin/_mocha --grep contract",
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
-    "prepack": "npm run build"
+    "prepack": "npm run build",
+    "lint": "ts-standard"
   },
   "repository": {
     "type": "git",
@@ -38,12 +40,27 @@
       }
     }
   },
+  "dependencies": {
+    "@stoplight/prism-cli": "^4.10.5",
+    "chai": "^4.3.7",
+    "mocha": "^10.2.0"
+  },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
-    "chai": "^4.3.7",
-    "mocha": "^10.2.0",
+    "@types/pino": "^7.0.5",
+    "pino": "^8.8.0",
+    "pino-pretty": "^9.1.1",
     "ts-node": "^10.9.1",
+    "ts-standard": "^12.0.2",
     "typescript": "^4.9.4"
+  },
+  "eslintConfig": {
+    "parserOptions": {
+      "project": "./tsconfig.eslint.json"
+    },
+    "extends": [
+      "./node_modules/ts-standard/eslintrc.json"
+    ]
   }
 }

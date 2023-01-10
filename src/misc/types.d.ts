@@ -1,0 +1,50 @@
+import { IHttpConfig } from '@stoplight/prism-http'
+import { JSONSchema7 } from 'json-schema'
+import * as pino from 'pino'
+
+export type httpMethod = 'request' | 'response'
+
+export type withoutBody = 'get' | 'delete' | 'head' | 'options' | 'trace'
+export type withBody = 'post' | 'put' | 'patch'
+
+export declare type IClientConfig = IHttpConfig & {
+  baseUrl?: string
+  logger?: pino.Logger
+  upstream?: URL
+}
+
+export default interface iHttpMethod {
+  message: string[]
+}
+
+export type testData = Partial<Record<httpMethod, iHttpMethod>>
+
+export interface iViolations {
+  testData: testData
+}
+
+export interface iLogger {
+  violations?: iViolations
+  data?: unknown
+}
+
+export interface iValue {
+  examples?: string[]
+}
+
+export interface iProperties {
+  [key: string]: iValue
+}
+
+export interface iItems {
+  properties?: iProperties
+}
+
+export interface bodyMustHave extends JSONSchema7 {
+  properties?: iProperties
+  items?: iItems
+}
+
+export interface commonObj {
+  [key: string]: unknown
+}
