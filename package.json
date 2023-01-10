@@ -53,8 +53,7 @@
     "pino-pretty": "^9.1.1",
     "ts-node": "^10.9.1",
     "ts-standard": "^12.0.2",
-    "typescript": "^4.9.4",
-    "fsevents": "^1.2.9"
+    "typescript": "^4.9.4"
   },
   "eslintConfig": {
     "parserOptions": {
