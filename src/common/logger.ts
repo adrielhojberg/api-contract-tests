@@ -1,22 +1,36 @@
-import { iLogger } from '../misc/types'
+import { iLogger, iViolations } from '../misc/types'
 import { PrismHttp } from '@stoplight/prism-http/dist/client'
 import { IHttpResponse } from '@stoplight/prism-http/dist'
-import { IPrismOutput } from '@stoplight/prism-core'
+import { IPrismOutput, IPrismDiagnostic } from '@stoplight/prism-core'
 
-export const violationsHandler = (input: boolean, violations: IPrismOutput<IHttpResponse>['validations']): iLogger => {
-  const data = input ? 'response' : 'request'
-  const dataType = input ? 'input' : 'output'
-  const logger: iLogger = {
-    testData: {}
-  }
-  const message = violations[dataType].map((violation) => {
+export const generateMessage = (prismDiagnostic: IPrismDiagnostic[]): string[] => {
+  return prismDiagnostic.map((violation) => {
     const code = violation.code
     const msg = violation.message
     const path = violation.path
     return `${code ?? ''} - ${msg} - ${path?.toString() ?? ''}`
   })
-  logger.testData[data] = { message }
-  return logger
+}
+
+export const violationsHandler = (violations: IPrismOutput<IHttpResponse>['validations']): iViolations => {
+  // const data = input ? 'response' : 'request'
+  // const dataType = input ? 'input' : 'output'
+  const violationLogger: iViolations = {
+    testData: {}
+  }
+  const messageInput = generateMessage(violations.input)
+  const messageOutput = generateMessage(violations.output)
+  violationLogger.testData.request = { message: messageInput }
+  violationLogger.testData.response = { message: messageOutput }
+
+  return violationLogger
+  // const message = violations[dataType].map((violation) => {
+  //   const code = violation.code
+  //   const msg = violation.message
+  //   const path = violation.path
+  //   return `${code ?? ''} - ${msg} - ${path?.toString() ?? ''}`
+  // })
+  // violationLogger.testData[data] = { message }
   // return {
   //   testData: {
   //     [data]: message
@@ -36,14 +50,13 @@ export const violationsHandler = (input: boolean, violations: IPrismOutput<IHttp
 
 export const loggerTestData = async (response: Awaited<ReturnType<PrismHttp['request']>>): Promise<iLogger | undefined> => {
   const violations = response.violations
-  // Agregar response.data al output
-  if (violations.input.length >= 1) {
-    return violationsHandler(true, violations)
+  const data = response.data
+  const violationLogger = violationsHandler(violations)
+  const logger: iLogger = {
+    data,
+    violations: violationLogger
   }
-  if (violations.output.length >= 1) {
-    return violationsHandler(false, violations)
-  }
-  return undefined
+  return logger
 }
 
 // export const createErrorLogsFile = async (logs) => {

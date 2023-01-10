@@ -18,8 +18,13 @@ export default interface iHttpMethod {
 
 export type testData = Partial<Record<httpMethod, iHttpMethod>>
 
-export interface iLogger {
+export interface iViolations {
   testData: testData
+}
+
+export interface iLogger {
+  violations?: iViolations
+  data?: unknown
 }
 
 export interface iValue {
