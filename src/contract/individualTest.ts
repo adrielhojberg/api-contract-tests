@@ -6,7 +6,6 @@ import chai from 'chai'
 chai.should()
 
 export default async function individualTest (operation: IHttpOperation<false>, client: PrismHttp): Promise<void> {
-  // let response
   const response = await runContractTests(operation, client)
   try {
     await response.violations.input.should.have.lengthOf(0)

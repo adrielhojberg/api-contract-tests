@@ -1,4 +1,5 @@
 import test from './test'
+import { TESTNAME } from '../misc/const'
 import 'mocha'
 
-describe('contract', test)
+describe(TESTNAME, test)

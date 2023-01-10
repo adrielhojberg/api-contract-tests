@@ -10,6 +10,7 @@ export type withBody = 'post' | 'put' | 'patch'
 export declare type IClientConfig = IHttpConfig & {
   baseUrl?: string
   logger?: pino.Logger
+  upstream?: URL
 }
 
 export default interface iHttpMethod {

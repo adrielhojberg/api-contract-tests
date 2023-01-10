@@ -13,14 +13,6 @@ const parseRequestBody = async (body: bodyMustHave): Promise<commonObj | commonO
       res[key] = val ?? ''
     })
   }
-  // Object.entries(body).forEach(([bodyKey, bodyValue]) => {
-  //   if (bodyKey === 'properties') {
-  //     Object.entries(bodyValue).forEach(([key, value]) => {
-  //       const val = value?.examples?.[0]
-  //       res[key] = val ?? ''
-  //     })
-  //   }
-  // })
   if (isArray) return [res]
   return res
 }

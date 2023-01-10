@@ -8,13 +8,11 @@ export const generateMessage = (prismDiagnostic: IPrismDiagnostic[]): string[] =
     const code = violation.code
     const msg = violation.message
     const path = violation.path
-    return `${code ?? ''} - ${msg} - ${path?.toString() ?? ''}`
+    return `${(code != null) ? `code: ${code} <->` : ''} message: ${msg} ${(path?.toString() != null) ? `<-> path: ${path.toString()}` : ''}`
   })
 }
 
 export const violationsHandler = (violations: IPrismOutput<IHttpResponse>['validations']): iViolations => {
-  // const data = input ? 'response' : 'request'
-  // const dataType = input ? 'input' : 'output'
   const violationLogger: iViolations = {
     testData: {}
   }
@@ -24,28 +22,6 @@ export const violationsHandler = (violations: IPrismOutput<IHttpResponse>['valid
   violationLogger.testData.response = { message: messageOutput }
 
   return violationLogger
-  // const message = violations[dataType].map((violation) => {
-  //   const code = violation.code
-  //   const msg = violation.message
-  //   const path = violation.path
-  //   return `${code ?? ''} - ${msg} - ${path?.toString() ?? ''}`
-  // })
-  // violationLogger.testData[data] = { message }
-  // return {
-  //   testData: {
-  //     [data]: message
-  //   }
-  // }
-  // old code
-  // violations[dataType].forEach((violation) => {
-  //   const code = violation.code
-  //   const message = violation.message
-  //   const path = violation.path
-  //   mnjs = [
-  //     ...logger.testData[data].message,
-  //       `${code || ''} - ${message} - ${path ?? ''}`
-  //   ]
-  // })
 }
 
 export const loggerTestData = async (response: Awaited<ReturnType<PrismHttp['request']>>): Promise<iLogger | undefined> => {
