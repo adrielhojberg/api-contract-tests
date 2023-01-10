@@ -9,8 +9,9 @@
     "contract": "./node_modules/mocha/bin/_mocha --grep contract",
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
-    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/index.js lib/esm/index.mjs",
+    "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/src/index.js lib/esm/src/index.mjs",
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
+    "preinstall": "npm install -g npm",
     "prepack": "npm run build",
     "lint": "ts-standard"
   },
