@@ -1,3 +1,4 @@
+import { LoggerOptions, Logger, BaseLogger, pino } from 'pino'
 import { IClientConfig } from './types'
 
 export const SERVER = 'https://petstore3.swagger.io/api/v3'
@@ -10,6 +11,17 @@ export const HEADERS = { headers: { 'Content-type': 'application/json', accept: 
 
 export const TESTNAME = 'contract'
 
+export const LOGGEROPTIONS: LoggerOptions = {
+  transport: {
+    target: 'pino-pretty',
+    options: {
+      colorize: true
+    }
+  }
+}
+
+export const LOGGER: Logger<LoggerOptions> = pino(LOGGEROPTIONS)
+
 export const CLIENTCONFIG: IClientConfig = {
   mock: false,
   validateRequest: true,
@@ -17,5 +29,6 @@ export const CLIENTCONFIG: IClientConfig = {
   checkSecurity: false,
   errors: false,
   upstreamProxy: undefined,
-  upstream: new URL(SERVER)
+  upstream: new URL(SERVER),
+  logger: LOGGER
 }
