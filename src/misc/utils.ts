@@ -1,3 +1,5 @@
+import { PATHVARREGEXP } from './const'
+
 export const pathReplaceVar = (str: string, toReplace: string): string => {
-  return str.replace(/\{.+?\}/, toReplace)
+  return str.replace(PATHVARREGEXP, toReplace)
 }
