@@ -1,4 +1,4 @@
-import { LoggerOptions, Logger, BaseLogger, pino } from 'pino'
+import { LoggerOptions, Logger, pino } from 'pino'
 import { IClientConfig } from './types'
 
 export const SERVER = 'https://petstore3.swagger.io/api/v3'
