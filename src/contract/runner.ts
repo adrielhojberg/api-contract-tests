@@ -2,9 +2,10 @@
 import { IHttpOperation } from '@stoplight/types'
 import { treatPath } from '../common/treatPath'
 import { PrismHttp } from '@stoplight/prism-http/dist/client'
-import { bodyMustHave, withBody, withoutBody } from '../misc/types'
+import { withBody, withoutBody } from '../misc/types'
 import parseRequestBody from '../common/parseBody'
 import { HEADERS } from '../misc/const'
+import { JSONSchema4 } from 'json-schema'
 
 export default async function runContractTests (operation: IHttpOperation<false>, client: PrismHttp): Promise<Awaited<ReturnType<PrismHttp['request']>>> {
   const server = operation.servers?.[0].url
@@ -14,7 +15,7 @@ export default async function runContractTests (operation: IHttpOperation<false>
   const upstreamOperation = { upstream: new URL(server ?? '') }
   // const url = server != null ? `${server}${path}` : path
   if (body != null) {
-    const schema = body.contents?.[0].schema as bodyMustHave
+    const schema = body.contents?.[0].schema as JSONSchema4
     const requestBody = await parseRequestBody(schema ?? {})
     const res = await client[operation.method as withBody](path, requestBody, HEADERS, upstreamOperation)
     return res
