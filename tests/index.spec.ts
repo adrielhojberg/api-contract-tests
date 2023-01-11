@@ -2,8 +2,9 @@ import 'mocha'
 
 describe('unit',
   () => {
-    it('hola mundo', () => {
-      console.log('test running')
+    // first unit log
+    it('---- START UNIT TESTS ----', () => {
+      console.log('Test running')
     }
     )
   }

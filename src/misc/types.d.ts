@@ -1,11 +1,16 @@
 import { IHttpConfig } from '@stoplight/prism-http'
-import { JSONSchema7 } from 'json-schema'
+import { JSONSchema7, JSONSchema4Type } from 'json-schema'
 import * as pino from 'pino'
 
 export type httpMethod = 'request' | 'response'
 
 export type withoutBody = 'get' | 'delete' | 'head' | 'options' | 'trace'
 export type withBody = 'post' | 'put' | 'patch'
+
+interface NestedArray<T> extends Array<T | NestedArray<T>> {
+}
+
+export type bodyTypes = JSONSchema4Type | NestedArray<bodyTypes>
 
 export declare type IClientConfig = IHttpConfig & {
   baseUrl?: string
@@ -29,20 +34,16 @@ export interface iLogger {
 }
 
 export interface iValue {
-  examples?: string[]
+  examples?: bodyTypes[]
 }
 
 export interface iProperties {
   [key: string]: iValue
 }
 
-export interface iItems {
-  properties?: iProperties
-}
-
 export interface bodyMustHave extends JSONSchema7 {
   properties?: iProperties
-  items?: iItems
+  items?: iValue
 }
 
 export interface commonObj {

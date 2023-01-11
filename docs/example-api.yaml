@@ -675,6 +675,14 @@ components:
         name:
           type: string
           example: Dogs
+        otherCategories:
+          type: array
+          items:
+            type: object
+            properties:
+              era:
+                type: string
+                example: mentira
       xml:
         name: category
     User:
