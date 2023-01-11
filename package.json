@@ -5,7 +5,8 @@
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/types/index.d.ts",
   "scripts": {
-    "test": "./node_modules/mocha/bin/_mocha --grep unit",
+    "pretest": "",
+    "test": "./node_modules/mocha/bin/_mocha --grep unit --harmony-weak-ref",
     "contract": "./node_modules/mocha/bin/_mocha --grep contract",
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
