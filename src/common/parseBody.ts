@@ -1,24 +1,34 @@
 import { bodyTypes } from '../misc/types'
 import { JSONSchema4Object, JSONSchema4Array, JSONSchema4 } from 'json-schema'
+import { MISSING_EXAMPLE_MSG } from '../misc/const'
+import { errorExampleHandler } from '../misc/utils'
 
-const parseRequestBody = (body: JSONSchema4): bodyTypes => {
+const parseRequestBody = async (body: JSONSchema4): Promise<bodyTypes> => {
   if (body.type === 'array') {
     if (body.items != null) {
-      const res: JSONSchema4Array = [parseRequestBody(body.items)]
+      const res: JSONSchema4Array = [await parseRequestBody(body.items)]
       return res
     }
   }
   if (body.type === 'object') {
     if (body.properties != null) {
       const res: JSONSchema4Object = {}
-      Object.entries(body.properties).forEach(([key, value]) => {
-        res[key] = parseRequestBody(value)
-      })
+      for (const [key, value] of Object.entries(body.properties)) {
+        res[key] = await parseRequestBody(value).catch((err: unknown) => {
+          return errorExampleHandler(err, `filed: ${key}`)
+        })
+      }
       return res
     }
   }
-  const res: bodyTypes = body.examples?.[0] ?? null
-  return res
+  try {
+    const res: bodyTypes = body.examples[0]
+    return res
+  } catch (err) {
+    const type = body.type?.toString()
+    const message: string = `${MISSING_EXAMPLE_MSG} ${(type != null) ? `type: ${type}` : ''}`
+    throw new Error(message)
+  }
 }
 // type === arr [recursion(body.items)]
 // type === obj object.prop.forEach([key,value] => obj[key]: recursion(value))
