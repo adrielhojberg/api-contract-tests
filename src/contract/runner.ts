@@ -6,7 +6,7 @@ import { withBody, withoutBody } from '../misc/types'
 import parseRequestBody from '../common/parseBody'
 import { HEADERS } from '../misc/const'
 import { JSONSchema4 } from 'json-schema'
-import { errorExampleHandler } from '../misc/utils'
+import { errorExampleHandler, jsonErrorHandler } from '../misc/utils'
 
 export default async function runContractTests (operation: IHttpOperation<false>, client: PrismHttp): Promise<Awaited<ReturnType<PrismHttp['request']>>> {
   const server = operation.servers?.[0].url
@@ -20,9 +20,9 @@ export default async function runContractTests (operation: IHttpOperation<false>
     const requestBody = await parseRequestBody(schema ?? {}).catch((err: unknown) => {
       return errorExampleHandler(err, `on path: ${operation.path}`)
     })
-    const res = await client[operation.method as withBody](path, requestBody, HEADERS, upstreamOperation)
+    const res = await client[operation.method as withBody](path, requestBody, HEADERS, upstreamOperation).catch(jsonErrorHandler)
     return res
   }
-  const res = await client[operation.method as withoutBody](path, upstreamOperation)
+  const res = await client[operation.method as withoutBody](path, upstreamOperation).catch(jsonErrorHandler)
   return res
 }
