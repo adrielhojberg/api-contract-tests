@@ -9,16 +9,16 @@ describe('unit',
     // body parser
     describe('Body parser types',
       () => {
-        it('string', () => {
+        it('string', async () => {
           const body: JSONSchema4 = {
             type: 'string',
             examples: ['messi']
           }
-          const res = parseRequestBody(body)
+          const res = await parseRequestBody(body)
           res?.should.have.string('messi')
         }
         )
-        it('array', () => {
+        it('array', async () => {
           const body: JSONSchema4 = {
             type: 'array',
             items: {
@@ -29,11 +29,11 @@ describe('unit',
               }
             }
           }
-          const res = parseRequestBody(body)
+          const res = await parseRequestBody(body)
           res?.should.have.eql([['messi']])
         }
         )
-        it('deep obj', () => {
+        it('deep obj', async () => {
           const body: JSONSchema4 = {
             type: 'object',
             properties: {
@@ -63,7 +63,7 @@ describe('unit',
               }
             }
           }
-          const res = parseRequestBody(body)
+          const res = await parseRequestBody(body)
           res?.should.have.eql({
             arquero: 'dibu',
             jugadores: [{
