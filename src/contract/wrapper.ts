@@ -6,7 +6,6 @@ import individualTest from './individualTest'
 
 export default async function wrapper (): Promise<void> {
   // file input
-  console.log(argv)
   const fileName = argv.f
   // server input
   const upstream = new URL(SERVER)
