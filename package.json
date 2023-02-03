@@ -8,8 +8,7 @@
     "contract": "./bin/index"
   },
   "scripts": {
-    "test": "./node_modules/mocha/bin/_mocha --grep unit",
-    "contract": "./node_modules/mocha/bin/_mocha --grep contract",
+    "test": "./node_modules/mocha/bin/_mocha",
     "clean": "rm -rf ./lib",
     "build": "npm run clean && npm run build:esm && npm run build:cjs",
     "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/src/index.js lib/esm/src/index.mjs",
