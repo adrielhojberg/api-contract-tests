@@ -4,6 +4,9 @@
   "description": "Open source NPM package for dynamically generated contract tests using Prism and Mocha.",
   "main": "./lib/cjs/index.js",
   "types": "./lib/cjs/types/index.d.ts",
+  "bin": {
+    "contract": "./bin/index"
+  },
   "scripts": {
     "test": "./node_modules/mocha/bin/_mocha --grep unit",
     "contract": "./node_modules/mocha/bin/_mocha --grep contract",
@@ -12,7 +15,8 @@
     "build:esm": "tsc -p ./configs/tsconfig.esm.json && mv lib/esm/src/index.js lib/esm/src/index.mjs",
     "build:cjs": "tsc -p ./configs/tsconfig.cjs.json",
     "prepack": "npm run build",
-    "lint": "ts-standard"
+    "lint": "ts-standard",
+    "start": "ts-node ./src/index.ts"
   },
   "repository": {
     "type": "git",
@@ -43,12 +47,14 @@
   "dependencies": {
     "@stoplight/prism-cli": "^4.10.5",
     "chai": "^4.3.7",
-    "mocha": "^10.2.0"
+    "mocha": "^10.2.0",
+    "yargs": "^17.6.2"
   },
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/mocha": "^10.0.1",
     "@types/pino": "^7.0.5",
+    "@types/yargs": "^17.0.22",
     "pino": "^8.8.0",
     "pino-pretty": "^9.1.1",
     "ts-node": "^10.9.1",
