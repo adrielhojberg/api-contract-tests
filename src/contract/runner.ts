@@ -10,11 +10,11 @@ import { errorExampleHandler, jsonErrorHandler } from '../misc/utils'
 import { treatUrl } from '../common/treatUrl'
 
 export default async function runContractTests (operation: IHttpOperation<false>, client: PrismHttp): Promise<Awaited<ReturnType<PrismHttp['request']>>> {
-  const server = treatUrl(operation)
+  const server = await treatUrl(operation)
   const path = await treatPath(operation)
   const body = operation.request?.body
   // test with baseurl
-  const upstreamOperation = { upstream: new URL(server ?? '') }
+  const upstreamOperation = { upstream: new URL(server) }
   // const url = server != null ? `${server}${path}` : path
   if (body != null) {
     const schema = body.contents?.[0].schema as JSONSchema4

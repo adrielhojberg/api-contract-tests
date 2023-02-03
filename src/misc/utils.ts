@@ -1,8 +1,9 @@
 import { PATHVARREGEXP } from './const'
 import { ProblemJson } from '@stoplight/prism-http'
 
-export const pathReplaceVar = (str: string, toReplace: string): string => {
-  return str.replace(PATHVARREGEXP, toReplace)
+export const pathReplaceVar = (str: string, toReplace: string, key?: string): string => {
+  const pathRegExp = key != null ? new RegExp(`{${key}}`) : PATHVARREGEXP
+  return str.replace(pathRegExp, toReplace)
 }
 
 export const errorExampleHandler = (err: unknown, message: string): never => {
