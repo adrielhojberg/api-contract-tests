@@ -8,9 +8,10 @@ import { HEADERS } from '../misc/const'
 import { JSONSchema4 } from 'json-schema'
 import { errorExampleHandler, jsonErrorHandler } from '../misc/utils'
 import { treatUrl } from '../common/treatUrl'
+import argv from '../common/args'
 
 export default async function runContractTests (operation: IHttpOperation<false>, client: PrismHttp): Promise<Awaited<ReturnType<PrismHttp['request']>>> {
-  const server = await treatUrl(operation)
+  const server = argv.s != null ? argv.s : await treatUrl(operation)
   const path = await treatPath(operation)
   const body = operation.request?.body
   // test with baseurl
