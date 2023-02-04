@@ -1,11 +1,12 @@
+import argv from '../common/args'
 import { getData } from '../common/generateOperations'
-import { CLIENTCONFIG, SERVER, OPERATIONIID, DIRFILE } from '../misc/const'
+import { CLIENTCONFIG, SERVER, OPERATIONIID } from '../misc/const'
 import { IClientConfig } from '../misc/types'
 import individualTest from './individualTest'
 
 export default async function wrapper (): Promise<void> {
   // file input
-  const fileName = DIRFILE
+  const fileName = argv.f
   // server input
   const upstream = new URL(SERVER)
 
