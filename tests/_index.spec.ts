@@ -1,7 +1,10 @@
+// This file must be first in the test folder
 import 'mocha'
 import chai from 'chai'
 import parseBodyTest from './parseBody.spec'
+import addQueryTest from './addQuery.spec'
 import utilTest from './utils.spec'
+
 chai.should()
 
 describe('unit',
@@ -13,5 +16,6 @@ describe('unit',
     )
     describe('Body parser types', parseBodyTest)
     describe('Utils tests', utilTest)
+    describe('Query params tests', addQueryTest)
   }
 )
