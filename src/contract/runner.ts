@@ -14,6 +14,8 @@ export default async function runContractTests (operation: IHttpOperation<false>
   const server = argv.s != null ? argv.s : await treatUrl(operation)
   const path = await treatPath(operation)
   const body = operation.request?.body
+  const mediaType = body?.contents?.[0].mediaType
+  const headers = mediaType != null ? { headers: { 'Content-type': `${mediaType}`, accept: '*/*' } } : HEADERS
   // test with baseurl
   const upstreamOperation = { upstream: new URL(server) }
   // const url = server != null ? `${server}${path}` : path
@@ -22,7 +24,7 @@ export default async function runContractTests (operation: IHttpOperation<false>
     const requestBody = await parseRequestBody(schema ?? {}).catch((err: unknown) => {
       return errorExampleHandler(err, `on path: ${operation.path}`)
     })
-    const res = await client[operation.method as withBody](path, requestBody, HEADERS, upstreamOperation).catch(jsonErrorHandler)
+    const res = await client[operation.method as withBody](path, requestBody, headers, upstreamOperation).catch(jsonErrorHandler)
     return res
   }
   const res = await client[operation.method as withoutBody](path, upstreamOperation).catch(jsonErrorHandler)
