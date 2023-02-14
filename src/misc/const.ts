@@ -21,10 +21,11 @@ export const MISSING_EXAMPLE_MSG = 'Sorry you must provide an example in the fil
 
 export const LOGGEROPTIONS: LoggerOptions = {
   transport: {
-    target: 'pino-pretty',
-    options: {
-      colorize: true
-    }
+    targets: [
+      { target: 'pino/file', level: 'info', options: { destination: './pino.log', mkdir: true, sync: 'false' } },
+      { target: 'pino/file', level: 'error', options: { destination: './pino-error.log', mkdir: true, sync: 'false' } },
+      { target: 'pino-pretty', level: 'info', options: { colorize: true } }
+    ]
   }
 }
 

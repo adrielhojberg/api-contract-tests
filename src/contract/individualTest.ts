@@ -3,6 +3,7 @@ import { IHttpOperation } from '@stoplight/types'
 import { loggerTestData } from '../common/logger'
 import runContractTests from './runner'
 import chai from 'chai'
+import { generalThrowError } from '../misc/utils'
 chai.should()
 
 export default async function individualTest (operation: IHttpOperation<false>, client: PrismHttp): Promise<void> {
@@ -13,6 +14,6 @@ export default async function individualTest (operation: IHttpOperation<false>, 
   } catch (error) {
     const errorLogger = await loggerTestData(response)
     const parsedLogger = typeof errorLogger === 'string' ? errorLogger : JSON.stringify(errorLogger, null, 2)
-    throw new Error(parsedLogger)
+    return generalThrowError(parsedLogger)
   }
 }

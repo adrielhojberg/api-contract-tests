@@ -1,5 +1,6 @@
 import { IHttpQueryParam } from '@stoplight/types'
 import { MISSING_EXAMPLE_MSG } from '../misc/const'
+import { generalThrowError } from '../misc/utils'
 
 export async function addQuery (query: Array<IHttpQueryParam<false>>, path: string): Promise<string> {
   let newPath: string = path + '?'
@@ -11,7 +12,7 @@ export async function addQuery (query: Array<IHttpQueryParam<false>>, path: stri
       newPath += newQuery
     } else {
       const message = `${MISSING_EXAMPLE_MSG} query: ${q.name}`
-      throw new Error(message)
+      return generalThrowError(message)
     }
     if (i + 1 !== query.length) {
       newPath += '&'

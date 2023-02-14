@@ -1,7 +1,7 @@
 import { bodyTypes } from '../misc/types'
 import { JSONSchema4Object, JSONSchema4Array, JSONSchema4 } from 'json-schema'
 import { MISSING_EXAMPLE_MSG } from '../misc/const'
-import { errorExampleHandler } from '../misc/utils'
+import { errorExampleHandler, generalThrowError } from '../misc/utils'
 
 const parseRequestBody = async (body: JSONSchema4): Promise<bodyTypes> => {
   if (body.type === 'array') {
@@ -27,7 +27,7 @@ const parseRequestBody = async (body: JSONSchema4): Promise<bodyTypes> => {
   } catch (err) {
     const type = body.type?.toString()
     const message: string = `${MISSING_EXAMPLE_MSG} ${(type != null) ? `type: ${type}` : ''}`
-    throw new Error(message)
+    return generalThrowError(message)
   }
 }
 // type === arr [recursion(body.items)]

@@ -1,4 +1,4 @@
-import { PATHVARREGEXP } from './const'
+import { LOGGER, PATHVARREGEXP } from './const'
 import { ProblemJson } from '@stoplight/prism-http'
 
 export const pathReplaceVar = (str: string, toReplace: string, key?: string): string => {
@@ -9,7 +9,7 @@ export const pathReplaceVar = (str: string, toReplace: string, key?: string): st
 export const errorExampleHandler = (err: unknown, message: string): never => {
   const error = err as Error
   const newMessage = `${error.message} ${message}`
-  throw new Error(newMessage)
+  return generalThrowError(newMessage)
 }
 
 export const jsonErrorHandler = (err: ProblemJson & Partial<Error>): never => {
@@ -17,5 +17,10 @@ export const jsonErrorHandler = (err: ProblemJson & Partial<Error>): never => {
     ? 'The body type and the header type doesn\'t match, you must send a valid json.\n'
     : ''
   const message = jsonError + (err.message ?? err.detail)
+  return generalThrowError(message)
+}
+
+export const generalThrowError = (message: string): never => {
+  LOGGER.error(message)
   throw new Error(message)
 }

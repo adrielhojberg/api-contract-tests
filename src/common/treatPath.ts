@@ -1,4 +1,4 @@
-import { errorExampleHandler, pathReplaceVar } from '../misc/utils'
+import { errorExampleHandler, generalThrowError, pathReplaceVar } from '../misc/utils'
 import { IHttpOperation } from '@stoplight/types'
 import { MISSING_EXAMPLE_MSG, PATHVARNAME, PATHVARREGEXP } from '../misc/const'
 import { addQuery } from './addQuery'
@@ -19,7 +19,7 @@ export const treatPath = async (operation: IHttpOperation<false>): Promise<strin
       }
     } else {
       const message = `${MISSING_EXAMPLE_MSG} ${path.match(PATHVARNAME)?.[0] ?? path} on: ${path}`
-      throw new Error(message)
+      return generalThrowError(message)
     }
   }
   const query = operation.request?.query

@@ -1,4 +1,4 @@
-import { pathReplaceVar } from '../misc/utils'
+import { generalThrowError, pathReplaceVar } from '../misc/utils'
 import { IHttpOperation } from '@stoplight/types'
 import { MISSING_EXAMPLE_MSG, PATHVARNAME, PATHVARREGEXP } from '../misc/const'
 
@@ -13,13 +13,13 @@ export const treatUrl = async (operation: IHttpOperation<false>): Promise<string
         }
       } else {
         const message = `${MISSING_EXAMPLE_MSG} ${server.match(PATHVARNAME)?.[0] ?? server} on: ${server}`
-        throw new Error(message)
+        return generalThrowError(message)
       }
       return server
     } else {
       return server
     }
   } else {
-    throw new Error('Server is not defined')
+    return generalThrowError('Server is not defined')
   }
 }
