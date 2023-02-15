@@ -29,6 +29,7 @@ export interface iViolations {
 }
 
 export interface iLogger {
+  status?: number
   violations?: iViolations
   data?: unknown
 }

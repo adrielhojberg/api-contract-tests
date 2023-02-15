@@ -27,8 +27,10 @@ export const violationsHandler = (violations: IPrismOutput<IHttpResponse>['valid
 export const loggerTestData = async (response: Awaited<ReturnType<PrismHttp['request']>>): Promise<iLogger | undefined> => {
   const violations = response.violations
   const data = response.data
+  const status = response.status
   const violationLogger = violationsHandler(violations)
   const logger: iLogger = {
+    status,
     data,
     violations: violationLogger
   }
