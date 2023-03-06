@@ -9,7 +9,7 @@ export const OPERATIONIID = 'Operation'
 
 export const DIRFILE = 'docs/example-api.yaml'
 
-export const HEADERS = { headers: { 'Content-type': 'application/json', accept: '*/*' } }
+export const HEADERS = { headers: { 'Content-type': 'application/json', accept: '*/*', Authorization: '' } }
 
 export const TESTNAME = 'contract'
 
