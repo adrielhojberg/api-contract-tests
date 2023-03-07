@@ -18,8 +18,12 @@ export default async function runContractTests (operation: IHttpOperation<false>
   const body = operation.request?.body
   const mediaType = body?.contents?.[0].mediaType
   const headers = mediaType != null ? { headers: { 'Content-type': `${mediaType}`, accept: '*/*', Authorization: '' } } : HEADERS
-  if (argv.b != null) {
-    headers.headers.Authorization = process.env.BEARER_TOKEN as string
+  const security = operation.security
+  if (security?.length !== 0 && security?.[0][0].key === 'bearerAuth') {
+    headers.headers.Authorization = process.env.BEARER_TOKEN != null ? process.env.BEARER_TOKEN : ''
+    if (headers.headers.Authorization === '') {
+      throw (Error('Bearer token not defined'))
+    }
   }
   // test with baseurl
   const upstreamOperation = { upstream: new URL(server) }
