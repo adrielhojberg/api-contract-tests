@@ -6,7 +6,7 @@ import individualTest from './individualTest'
 
 export default async function wrapper (): Promise<void> {
   // file input
-  const fileName = argv.f as string
+  const fileName = argv.f
   // server input
   const upstream = new URL(SERVER)
 
@@ -15,7 +15,8 @@ export default async function wrapper (): Promise<void> {
     upstream
   }
   const { operations, client } = await getData(fileName, prismClientConfig)
-  describe(`${fileName}`, () => {
+  describe(`${fileName}`, function () {
+    this.timeout(0)
     operations.forEach((operation) => {
       it(`${operation.iid ?? OPERATIONIID} @contract`, async () => {
         await individualTest(operation, client)
