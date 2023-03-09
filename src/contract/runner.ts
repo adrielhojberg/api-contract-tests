@@ -9,13 +9,22 @@ import { JSONSchema4 } from 'json-schema'
 import { errorExampleHandler, jsonErrorHandler } from '../misc/utils'
 import { treatUrl } from '../common/treatUrl'
 import argv from '../common/args'
+import * as dotenv from 'dotenv' // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config()
 
 export default async function runContractTests (operation: IHttpOperation<false>, client: PrismHttp): Promise<Awaited<ReturnType<PrismHttp['request']>>> {
   const server = argv.s != null ? argv.s : await treatUrl(operation)
   const path = await treatPath(operation)
   const body = operation.request?.body
   const mediaType = body?.contents?.[0].mediaType
-  const headers = mediaType != null ? { headers: { 'Content-type': `${mediaType}`, accept: '*/*' } } : HEADERS
+  const headers = mediaType != null ? { headers: { 'Content-type': `${mediaType}`, accept: '*/*', Authorization: '' } } : HEADERS
+  const security = operation.security
+  if (security?.length !== 0 && security?.[0][0].key === 'bearerAuth') {
+    headers.headers.Authorization = process.env.BEARER_TOKEN != null ? process.env.BEARER_TOKEN : ''
+    if (headers.headers.Authorization === '') {
+      throw (Error('Bearer token not defined'))
+    }
+  }
   // test with baseurl
   const upstreamOperation = { upstream: new URL(server) }
   // const url = server != null ? `${server}${path}` : path
@@ -27,6 +36,6 @@ export default async function runContractTests (operation: IHttpOperation<false>
     const res = await client[operation.method as withBody](path, requestBody, headers, upstreamOperation).catch(jsonErrorHandler)
     return res
   }
-  const res = await client[operation.method as withoutBody](path, upstreamOperation).catch(jsonErrorHandler)
+  const res = await client[operation.method as withoutBody](path, headers, upstreamOperation).catch(jsonErrorHandler)
   return res
 }
